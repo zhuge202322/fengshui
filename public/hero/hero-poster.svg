@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="sky" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#2a1a08"/>
+      <stop offset="40%" stop-color="#150c04"/>
+      <stop offset="100%" stop-color="#08050a"/>
+    </radialGradient>
+    <linearGradient id="mountFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2818" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#1a0f08"/>
+    </linearGradient>
+    <linearGradient id="mountMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#241408" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0d0703"/>
+    </linearGradient>
+    <linearGradient id="mountNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#120904"/>
+      <stop offset="100%" stop-color="#000"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8e1"/>
+      <stop offset="60%" stop-color="#e0bf5b" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#c9a233" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mist" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8e1" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#fff8e1" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+
+  <!-- stars -->
+  <g fill="#fff8e1">
+    <circle cx="200" cy="120" r="1.2" opacity="0.8"/>
+    <circle cx="450" cy="80" r="0.8" opacity="0.6"/>
+    <circle cx="700" cy="180" r="1" opacity="0.7"/>
+    <circle cx="900" cy="60" r="0.9" opacity="0.5"/>
+    <circle cx="1200" cy="140" r="1.4" opacity="0.85"/>
+    <circle cx="1450" cy="100" r="0.8" opacity="0.6"/>
+    <circle cx="1700" cy="200" r="1" opacity="0.7"/>
+    <circle cx="350" cy="260" r="0.8" opacity="0.5"/>
+    <circle cx="1100" cy="290" r="0.9" opacity="0.6"/>
+    <circle cx="1600" cy="320" r="1" opacity="0.7"/>
+  </g>
+
+  <!-- moon -->
+  <circle cx="1400" cy="280" r="120" fill="url(#moon)"/>
+  <circle cx="1400" cy="280" r="48" fill="#fbeec1" opacity="0.9"/>
+
+  <!-- distant mountains -->
+  <path d="M0 700 L120 600 L260 660 L400 540 L560 640 L720 560 L900 660 L1080 580 L1260 660 L1440 580 L1620 660 L1820 590 L1920 640 L1920 1080 L0 1080 Z" fill="url(#mountFar)"/>
+
+  <!-- mid mountains -->
+  <path d="M0 820 L160 720 L320 790 L500 700 L680 800 L860 730 L1080 820 L1300 720 L1500 800 L1700 730 L1920 800 L1920 1080 L0 1080 Z" fill="url(#mountMid)"/>
+
+  <!-- mist -->
+  <ellipse cx="960" cy="780" rx="900" ry="80" fill="url(#mist)"/>
+  <ellipse cx="500" cy="830" rx="500" ry="60" fill="url(#mist)" opacity="0.7"/>
+  <ellipse cx="1500" cy="830" rx="500" ry="60" fill="url(#mist)" opacity="0.7"/>
+
+  <!-- near mountains -->
+  <path d="M0 940 L240 860 L460 920 L700 850 L960 940 L1240 850 L1480 920 L1720 850 L1920 920 L1920 1080 L0 1080 Z" fill="url(#mountNear)"/>
+
+  <!-- pagoda silhouette -->
+  <g fill="#08050a" opacity="0.9">
+    <polygon points="600,860 580,900 620,900"/>
+    <rect x="585" y="900" width="30" height="20"/>
+    <polygon points="595,920 580,940 620,940 605,920"/>
+    <rect x="585" y="940" width="30" height="30"/>
+    <polygon points="595,970 575,1000 625,1000 605,970"/>
+  </g>
+</svg>
