@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { DivinationResult } from "@/lib/reading";
 import { ReadingResult } from "@/components/ReadingResult";
+import { ResultPaywall } from "@/components/ResultPaywall";
+import {
+  fetchVendureProducts,
+  type VendureProductSummary,
+} from "@/lib/vendure";
 
 const HOURS: { value: number; label: string; branch: string }[] = [
   { value: 0,  label: "23:00 – 00:59", branch: "子 Zi (Rat)" },
@@ -27,6 +32,24 @@ export default function DivinationPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<DivinationResult | null>(null);
+  const [recommendedProducts, setRecommendedProducts] = useState<
+    VendureProductSummary[]
+  >([]);
+
+  useEffect(() => {
+    if (!result) return;
+    let active = true;
+    fetchVendureProducts(8)
+      .then((items) => {
+        if (active) setRecommendedProducts(items);
+      })
+      .catch(() => {
+        if (active) setRecommendedProducts([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, [result]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -169,6 +192,18 @@ export default function DivinationPage() {
           </div>
         )}
       </div>
+
+      {result && (
+        <ResultPaywall
+          dayMaster={result.chart.day.element}
+          vendureProducts={recommendedProducts}
+          whatsappUrl={
+            process.env.NEXT_PUBLIC_WHATSAPP_URL ||
+            "https://wa.me/8615000000000"
+          }
+          whatsappMessage={`Hello LingYun, my BaZi reading reveals a ${result.chart.day.element} Day Master, ${result.chineseZodiac.animal} year, ${result.westernZodiac.name}. I would like a complete reading.`}
+        />
+      )}
     </section>
   );
 }

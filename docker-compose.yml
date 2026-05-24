@@ -1,0 +1,112 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: lingyun-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_MULTIPLE_DATABASES: lingyun_cms,lingyun_vendure
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  cms:
+    build:
+      context: ./cms
+      dockerfile: Dockerfile
+    container_name: lingyun-cms
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/lingyun_cms?schema=public
+      AUTH_SECRET: ${AUTH_SECRET:-replace-with-strong-secret}
+      PUBLIC_ALLOWED_ORIGIN: ${PUBLIC_ALLOWED_ORIGIN:-http://localhost:3000}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@lingyun.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-admin123456}
+      UPLOAD_DIR: public/uploads
+      PUBLIC_UPLOAD_BASE: /uploads
+    ports:
+      - "3001:3001"
+    volumes:
+      - cms_uploads:/app/public/uploads
+
+  vendure:
+    build:
+      context: ./vendure
+      dockerfile: Dockerfile
+      target: server
+    container_name: lingyun-vendure
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENV: dev
+      PORT: 3002
+      COOKIE_SECRET: ${VENDURE_COOKIE_SECRET:-replace-with-strong-secret}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: lingyun_vendure
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SUPERADMIN_USERNAME: ${SUPERADMIN_USERNAME:-superadmin}
+      SUPERADMIN_PASSWORD: ${SUPERADMIN_PASSWORD:-superadmin}
+      SHOP_ORIGIN: ${SHOP_ORIGIN:-http://localhost:3000}
+      ADMIN_ORIGIN: ${ADMIN_ORIGIN:-http://localhost:3002}
+    ports:
+      - "3002:3002"
+      - "3003:3003"
+    volumes:
+      - vendure_assets:/app/static
+
+  vendure-worker:
+    build:
+      context: ./vendure
+      dockerfile: Dockerfile
+      target: worker
+    container_name: lingyun-vendure-worker
+    restart: unless-stopped
+    depends_on:
+      vendure:
+        condition: service_started
+    environment:
+      APP_ENV: dev
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: lingyun_vendure
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      COOKIE_SECRET: ${VENDURE_COOKIE_SECRET:-replace-with-strong-secret}
+    volumes:
+      - vendure_assets:/app/static
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: lingyun-frontend
+    restart: unless-stopped
+    depends_on:
+      - cms
+    environment:
+      NEXT_PUBLIC_CMS_URL: http://cms:3001
+      NEXT_PUBLIC_VENDURE_SHOP_API: http://vendure:3002/shop-api
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
+  cms_uploads:
+  vendure_assets:

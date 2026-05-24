@@ -1,0 +1,17 @@
+# Backend services — deployed separately (Docker)
+cms/
+vendure/
+docker/
+docker-compose.yml
+Dockerfile.frontend
+
+# Local-only
+.env*.local
+.DS_Store
+*.tsbuildinfo
+
+# Build artefacts (Vercel rebuilds)
+node_modules
+.next
+out
+dist

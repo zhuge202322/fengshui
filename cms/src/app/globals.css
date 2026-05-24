@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500;600&display=swap");
+
+:root {
+  --c-bg: #0a0603;
+  --c-surface: #140d05;
+  --c-border: rgba(201, 162, 51, 0.25);
+  --c-text: #f6f1e7;
+  --c-muted: rgba(246, 241, 231, 0.55);
+  --c-primary: #c9a233;
+  --c-primary-soft: #e0bf5b;
+  --c-danger: #b91c1c;
+}
+
+html,
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm transition;
+    border-color: var(--c-border);
+    color: var(--c-text);
+  }
+  .btn:hover { border-color: var(--c-primary); }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition;
+    background: linear-gradient(180deg, var(--c-primary-soft), var(--c-primary));
+    border-color: var(--c-primary);
+    color: var(--c-bg);
+  }
+  .btn-primary:hover { filter: brightness(1.1); }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm transition;
+    border-color: var(--c-danger);
+    color: #fca5a5;
+  }
+  .btn-danger:hover { background: rgba(185, 28, 28, 0.15); }
+
+  .field {
+    @apply w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none transition;
+    border-color: var(--c-border);
+  }
+  .field:focus { border-color: var(--c-primary); box-shadow: 0 0 0 1px var(--c-primary); }
+  .field::placeholder { color: var(--c-muted); }
+
+  .label {
+    @apply mb-1.5 block text-xs uppercase tracking-[0.18em];
+    color: var(--c-primary-soft);
+  }
+
+  .panel {
+    @apply rounded-lg border p-5;
+    background: var(--c-surface);
+    border-color: var(--c-border);
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-[0.18em];
+    border-color: var(--c-border);
+    color: var(--c-primary-soft);
+  }
+
+  .gold-text {
+    background: linear-gradient(120deg, #7d5a10, #e0bf5b 50%, #7d5a10);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* TipTap editor styles */
+.tiptap {
+  min-height: 480px;
+  padding: 1.25rem 1.5rem;
+  outline: none;
+  color: var(--c-text);
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-size: 18px;
+  line-height: 1.75;
+}
+.tiptap p { margin: 0.75em 0; }
+.tiptap h1 { font-size: 2rem; margin: 1.2em 0 0.6em; font-family: "Cinzel", serif; color: var(--c-primary-soft); }
+.tiptap h2 { font-size: 1.6rem; margin: 1.1em 0 0.5em; font-family: "Cinzel", serif; color: var(--c-primary-soft); }
+.tiptap h3 { font-size: 1.3rem; margin: 1em 0 0.4em; color: var(--c-primary-soft); }
+.tiptap ul, .tiptap ol { padding-left: 1.5em; margin: 0.6em 0; }
+.tiptap li { margin: 0.25em 0; }
+.tiptap blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid var(--c-primary);
+  background: rgba(201, 162, 51, 0.06);
+  color: var(--c-muted);
+  font-style: italic;
+}
+.tiptap code {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.tiptap pre {
+  background: #0a0603;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+}
+.tiptap pre code { background: transparent; }
+.tiptap a { color: var(--c-primary-soft); text-decoration: underline; }
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+  border-radius: 6px;
+  border: 1px solid var(--c-border);
+}
+.tiptap hr { border: none; border-top: 1px solid var(--c-border); margin: 2em 0; }
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--c-muted);
+  pointer-events: none;
+  height: 0;
+}

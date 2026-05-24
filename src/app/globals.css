@@ -301,3 +301,213 @@ body {
   animation: drift 40s linear infinite;
   white-space: nowrap;
 }
+
+/* Article body — rendered from CMS contentHtml */
+.prose-lingyun {
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-size: 1.125rem;
+  line-height: 1.85;
+  color: var(--c-text);
+}
+.prose-lingyun > * + * { margin-top: 1.1em; }
+.prose-lingyun h1,
+.prose-lingyun h2,
+.prose-lingyun h3 {
+  font-family: "Cinzel", "Noto Serif SC", serif;
+  color: var(--c-primary-soft);
+  letter-spacing: 0.02em;
+}
+.prose-lingyun h1 { font-size: 2rem; margin-top: 2em; }
+.prose-lingyun h2 { font-size: 1.6rem; margin-top: 1.8em; }
+.prose-lingyun h3 { font-size: 1.3rem; margin-top: 1.6em; }
+.prose-lingyun a {
+  color: var(--c-primary-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-lingyun a:hover { color: var(--c-primary); }
+.prose-lingyun blockquote {
+  border-left: 3px solid var(--c-primary);
+  padding: 0.4em 1.2em;
+  margin: 1.4em 0;
+  background: rgba(201, 162, 51, 0.06);
+  color: var(--c-text-soft);
+  font-style: italic;
+}
+.prose-lingyun ul,
+.prose-lingyun ol {
+  padding-left: 1.5em;
+}
+.prose-lingyun ul { list-style: disc; }
+.prose-lingyun ol { list-style: decimal; }
+.prose-lingyun li { margin: 0.4em 0; }
+.prose-lingyun code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.prose-lingyun pre {
+  background: var(--c-bg-soft);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: 1em 1.2em;
+  overflow-x: auto;
+  font-size: 0.95em;
+}
+.prose-lingyun pre code { background: transparent; padding: 0; }
+.prose-lingyun img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.4em auto;
+  border-radius: 6px;
+  border: 1px solid var(--c-border);
+}
+.prose-lingyun hr {
+  border: none;
+  border-top: 1px solid var(--c-border);
+  margin: 2.4em auto;
+  width: 60%;
+}
+
+/* Result paywall — modal & sticky CTA */
+.paywall-overlay {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(201,162,51,0.15), transparent 60%),
+    rgba(2, 1, 0, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: paywallFade 380ms ease-out;
+}
+.paywall-shell {
+  animation: paywallRise 520ms cubic-bezier(0.2, 0.85, 0.25, 1);
+}
+.paywall-bagua {
+  background:
+    radial-gradient(circle, rgba(201,162,51,0.55) 0%, transparent 60%),
+    conic-gradient(from 0deg,
+      transparent 0deg, var(--c-primary) 30deg, transparent 60deg,
+      transparent 120deg, var(--c-primary) 150deg, transparent 180deg,
+      transparent 240deg, var(--c-primary) 270deg, transparent 300deg);
+  filter: blur(2px);
+  border-radius: 9999px;
+  animation: paywallSpin 22s linear infinite;
+}
+@keyframes paywallFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes paywallRise {
+  from { opacity: 0; transform: translateY(48px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+@keyframes paywallSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* CMS custom nodes — BaZi pillars */
+.prose-lingyun .bazi-chart {
+  margin: 2em 0;
+  padding: 1.2em 1.4em;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: rgba(201, 162, 51, 0.05);
+}
+.prose-lingyun .bazi-title {
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--c-primary-soft);
+  margin-bottom: 0.8em;
+}
+.prose-lingyun .bazi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6em;
+}
+.prose-lingyun .bazi-cell {
+  text-align: center;
+  padding: 0.8em 0.4em;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.15);
+}
+.prose-lingyun .bazi-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-text-soft);
+  opacity: 0.7;
+}
+.prose-lingyun .bazi-stem,
+.prose-lingyun .bazi-branch {
+  font-family: "Noto Serif SC", serif;
+  font-size: 1.8rem;
+  line-height: 1.1;
+}
+.prose-lingyun .bazi-stem  { color: var(--c-primary-soft); margin-top: 0.3em; }
+.prose-lingyun .bazi-branch { color: var(--c-text); }
+.prose-lingyun .bazi-notes {
+  margin-top: 0.8em;
+  font-style: italic;
+  color: var(--c-text-soft);
+  font-size: 0.9em;
+}
+
+/* CMS custom nodes — Five Elements radar */
+.prose-lingyun .five-elements {
+  margin: 2em 0;
+  padding: 1.2em 1.4em;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: rgba(201, 162, 51, 0.05);
+}
+.prose-lingyun .five-elements .fe-title {
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--c-primary-soft);
+  margin-bottom: 0.8em;
+}
+.prose-lingyun .fe-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4em;
+}
+@media (min-width: 640px) {
+  .prose-lingyun .fe-body { flex-direction: row; justify-content: space-around; }
+}
+.prose-lingyun .fe-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  min-width: 180px;
+}
+.prose-lingyun .fe-legend li {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+}
+.prose-lingyun .fe-legend .dot {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  margin-right: 0.5em;
+}
+.prose-lingyun .fe-legend .pct {
+  margin-left: auto;
+  color: var(--c-text-soft);
+}
+.prose-lingyun .fe-caption {
+  margin-top: 0.8em;
+  text-align: center;
+  font-style: italic;
+  color: var(--c-text-soft);
+}
